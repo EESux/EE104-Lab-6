@@ -1,0 +1,197 @@
+http://apmonitor.com/che263/index.php/Main/PythonDynamicSim
+
+
+===
+Tensorflow dataset
+https://www.tensorflow.org/datasets 
+
+Explore 70+ ML datasets. 
+
+
+================
+
+https://github.com/tensorflow/docs/blob/master/site/en/tutorials/images/classification.ipynb
+https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/images/classification.ipynb
+
+
+===
+
+import pathlib
+dataset_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"
+data_dir = tf.keras.utils.get_file('flower_photos', origin=dataset_url, untar=True)
+data_dir = pathlib.Path(data_dir)
+
+Change to: https://www.tensorflow.org/datasets/catalog/tf_flowers
+import pathlib
+dataset_url = "http://download.tensorflow.org/example_images/flower_photos.tgz"
+data_dir = tf.keras.utils.get_file('flower_photos', origin=dataset_url, untar=True)
+data_dir = pathlib.Path(data_dir)
+
+
+
+===
+
+For Validation of the Flower dataset
+
+#flower_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/592px-Red_sunflower.jpg"
+#flower_path = tf.keras.utils.get_file('Red_sunflower', origin=flower_url)
+====
+#Generalized code to validate all flowers
+flower_url = "https://images.all-free-download.com/images/graphiclarge/daisies_196008.jpg"
+flower_path = tf.keras.utils.get_file(  origin= flower_url)
+
+img = tf.keras.utils.load_img(
+    flower_path, target_size=(img_height, img_width)
+)
+img_array = tf.keras.utils.img_to_array(img)
+img_array = tf.expand_dims(img_array, 0) # Create a batch
+
+predictions = model.predict(img_array)
+score = tf.nn.softmax(predictions[0])
+
+print(
+    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    .format(class_names[np.argmax(score)], 100 * np.max(score))
+)
+===
+
+Roses
+https://as1.ftcdn.net/v2/jpg/02/19/24/18/1000_F_219241850_NdJYUDlUzkKycL9DJMA64JlCTtW7VjAj.jpg OK 98.68%
+https://as1.ftcdn.net/v2/jpg/00/77/65/54/1000_F_77655462_BT2963o4KoACUwJSkKmHUpFvXkMHSdqU.jpg OK 97.17%
+https://as1.ftcdn.net/v2/jpg/02/51/80/40/1000_F_251804048_jbDmWV8KilI2YvxywwO7m6w3ckuN59Ae.jpg OK 80.72%
+https://t4.ftcdn.net/jpg/00/84/36/55/240_F_84365589_c5jvwyGKiVS8V71plC0lGggUBsPNV6nx.jpg 98.28%
+https://as1.ftcdn.net/v2/jpg/03/32/71/38/1000_F_332713823_NcHXuHaZCuckg3oPUmATSFZcuIcmQe7e.jpg 91.09%
+https://images.all-free-download.com/images/graphiclarge/flower_rose_rose_blooms_216514.jpg mis-recognized
+https://images.all-free-download.com/images/graphiclarge/rose_flower_rose_blooms_263801.jpg ok
+https://images.all-free-download.com/images/graphiclarge/rose_flower_rose_blooms_264728.jpg ok 42.83%
+ 
+
+Dandelion
+https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Ripe_fruits_by_Common_Dandelion.jpg/774px-Ripe_fruits_by_Common_Dandelion.jpg ok 99.70%
+https://images.all-free-download.com/images/graphiclarge/dandelion_204753.jpg ok 99.19%
+https://images.all-free-download.com/images/graphiclarge/dandelion_incomplete_flower_222929.jpg OK 99.91%
+https://images.all-free-download.com/images/graphiclarge/dandelion_seeds_flower_262918.jpg OK 99.40%
+
+
+Tulips
+https://images.all-free-download.com/images/graphiclarge/red_and_yellow_tulips_190984.jpg OK 99.98%
+https://images.all-free-download.com/images/graphiclarge/tulip_red_yellow_232428.jpg OK 99.27%
+https://images.all-free-download.com/images/graphiclarge/tulips_red_yellow_216579.jpg OK 99.89%
+
+
+
+Sunflower
+https://storage.googleapis.com/download.tensorflow.org/example_images/592px-Red_sunflower.jpg OK 99.77%
+https://upload.wikimedia.org/wikipedia/commons/6/6b/Sunflower.jpg OK 99.24%
+https://images.all-free-download.com/images/graphiclarge/sunflower_sunflower_field_flora_215548.jpg
+https://images.all-free-download.com/images/graphiclarge/sunflower_196614.jpg
+
+
+Daisy
+https://images.all-free-download.com/images/graphiclarge/daisies_196008.jpg OK 94.80%
+https://images.all-free-download.com/images/graphiclarge/daisies_196008.jpg OK 94.80%
+https://images.unsplash.com/photo-1560717789-0ac7c58ac90a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80 OK 95.81%
+https://images.unsplash.com/photo-1497321697169-1ca9f1c8a253?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80 OK 41.30%
+https://www.provenwinners.com/sites/provenwinners.com/files/imagecache/width_500/ifa_upload/leucanthemum_daisy_may_03.jpg OK 41.81%
+https://images.all-free-download.com/images/graphiclarge/daisys_flowers_bloom_221809.jpg mis-recognized
+https://images.all-free-download.com/images/graphiclarge/red_daisy_daisy_flower_227866.jpg mis-recognized
+
+
+===
+#For validation of the CIFAR-10 dataset from https://www.tensorflow.org/tutorials/images/cnn 
+# https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/images/cnn.ipynb#scrollTo=WRzW5xSDDbNF
+#Generalized code to validate all flowers
+import numpy as np
+
+#Replace the URL below with a test image of 'airplane', 'automobile', 'bird', 'cat', 'deer','dog', 'frog', 'horse', 'ship', 'truck'
+img_url = "https://upload.wikimedia.org/wikipedia/commons/0/03/American_quarter_horse.jpg"
+img_path = tf.keras.utils.get_file(  origin= img_url)
+
+img_height = 32
+img_width = 32
+img = tf.keras.utils.load_img(
+    img_path, target_size=(img_height, img_width)
+)
+img_array = tf.keras.utils.img_to_array(img)
+img_array = tf.expand_dims(img_array, 0) # Create a batch
+
+predictions = model.predict(img_array)
+score = tf.nn.softmax(predictions[0])
+
+print(
+    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    .format(class_names[np.argmax(score)], 100 * np.max(score))
+)
+
+====
+
+'airplane', 
+https://cbsnews2.cbsistatic.com/hub/i/r/2017/03/27/73bd41ff-5703-48ca-995c-131d1b3572b4/thumbnail/640x335/10f4b442d725b8fa79d3e2dbf286ba76/air-force-one-two-planes.jpg
+https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Another_Airplane%21_%284676723312%29.jpg/1024px-Another_Airplane%21_%284676723312%29.jpg
+https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Voyager_aircraft.jpg/1200px-Voyager_aircraft.jpg
+https://static.wikia.nocookie.net/lostpedia/images/f/f7/Kateandplane.jpg/revision/latest/top-crop/width/360/height/450?cb=20061109012445 (not recognizable)
+https://www.zdnet.com/a/img/resize/071727877ee9884b60edd728253d2baadcb3985f/2021/02/23/19631992-64df-4af9-a288-a0cb4112e682/bombardier-globaleye-jet.jpg?width=1200&height=900&fit=crop&auto=webp (not recognizable)
+
+
+
+'automobile', 
+https://sniteartmuseum.nd.edu/assets/166204/original/ferrari.jpg
+https://www.kbb.com/articles/wp-content/uploads/2020/04/00-2020-bmw-8-series-gran-coupe.jpg
+https://images.all-free-download.com/images/graphiclarge/classic_jaguar_210354.jpg (not recognizable)
+https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/devel-motors-sixteen-1540564064.jpg (not recognizable)
+https://amsc-prod-cd.azureedge.net/-/media/aston-martin/images/default-source/models/valkyrie/new/valkyrie-spider_f02-169v2.jpg?mw=1980&rev=-1&hash=92E23C911BDE23D418D37F9187844B7C (not recognizable)
+
+'bird', 
+https://ichef.bbci.co.uk/news/976/cpsprodpb/67CF/production/_108857562_mediaitem108857561.jpg (not recognizable)
+https://upload.wikimedia.org/wikipedia/commons/5/53/Weaver_bird.jpg (not recognizable)
+https://images.all-free-download.com/images/graphiclarge/flying_bird_201952.jpg (not recognizable)
+https://www.allaboutbirds.org/news/wp-content/uploads/2009/04/WKingbird-James.jpg
+https://www.pestworld.org/media/560900/istock_000027713740_large.jpg?preset=pestFeature360
+
+
+'cat', 
+https://static.toiimg.com/thumb/msid-67586673,width-1070,height-580,overlay-toi_sw,pt-32,y_pad-40,resizemode-75,imgsize-3918697/67586673.jpg (not recognizable)
+https://wagznwhiskerz.com/wp-content/uploads/2017/10/home-cat.jpg (not recognizable)
+https://res.cloudinary.com/dnkxl7hbd/images/f_auto,q_auto/w_400,h_664/v1610516304/Lanai-Cats-we-need-you/Lanai-Cats-we-need-you.png (not recognizable)
+You can search for two of your own pictures that are recognizable
+
+'deer',
+Search for 5 images that are recognizable with your own code.
+
+'dog', 
+Search for 5 images that are recognizable with your own code.
+
+'frog', 
+Search for 5 images that are recognizable with your own code.
+
+'horse', 
+https://upload.wikimedia.org/wikipedia/commons/0/03/American_quarter_horse.jpg
+https://upload.wikimedia.org/wikipedia/commons/f/f0/White_horse.jpg
+Search for 3 images that are recognizable with your own code.
+
+'ship', 
+Search for 5 images that are recognizable with your own code.
+
+'truck'
+Search for 5 images that are recognizable with your own code.
+====
+
+===
+#For validation of the CIFAR-100 dataset with advanced techniques from
+# https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/quickstart/advanced.ipynb#scrollTo=i-2pkctU_Ci7 
+#class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer',
+#               'dog', 'frog', 'horse', 'ship', 'truck']
+
+plt.figure(figsize=(10,10))
+for i in range(25):
+    plt.subplot(5,5,i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(train_images[i])
+    # The CIFAR labels happen to be arrays, 
+    # which is why you need the extra index
+    #plt.xlabel(class_names[train_labels[i][0]])
+plt.show()
+
+
